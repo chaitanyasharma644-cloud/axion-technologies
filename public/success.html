@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Booking Confirmed — Axion Technologies Ltd</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@600;700&family=Inter:wght@400;500&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+<div class="grid-bg"></div>
+<section class="section success-page">
+  <div class="wrap">
+    <div class="success-card">
+      <span class="section-eyebrow">Payment received</span>
+      <h1>You're booked.</h1>
+      <p>Thanks for booking a strategy session with Axion Technologies. Check your email for a receipt and calendar invite — we'll reach out within a few hours to confirm your slot.</p>
+      <p class="mono success-ref" id="session-ref"></p>
+      <a href="/" class="btn">Back to homepage</a>
+    </div>
+  </div>
+</section>
+<script>
+  const params = new URLSearchParams(location.search);
+  const sid = params.get('session_id');
+  if (sid) document.getElementById('session-ref').textContent = 'Reference: ' + sid.slice(0, 20) + '…';
+</script>
+</body>
+</html>

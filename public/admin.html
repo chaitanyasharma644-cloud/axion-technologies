@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Axion — Admin</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{--void:#08090d;--panel:#0f1220;--panel-2:#141830;--cyan:#4ce0d2;--amber:#ffb86b;--ink:#edeff7;--slate:#8a8fa3;--line:rgba(237,239,247,0.09);}
+  *{box-sizing:border-box;}
+  body{background:var(--void);color:var(--ink);font-family:'Inter',sans-serif;margin:0;padding:40px 24px;}
+  h1{font-family:'Space Grotesk';font-size:24px;margin-bottom:6px;}
+  .sub{color:var(--slate);font-size:13.5px;margin-bottom:28px;}
+  .wrap{max-width:960px;margin:0 auto;}
+  .auth-box{display:flex;gap:10px;margin-bottom:28px;flex-wrap:wrap;}
+  input{background:rgba(255,255,255,0.03);border:1px solid var(--line);border-radius:8px;padding:10px 12px;color:var(--ink);font-family:'JetBrains Mono';font-size:13px;min-width:220px;}
+  button{background:var(--cyan);color:var(--void);border:none;border-radius:100px;padding:10px 20px;font-weight:600;font-size:13.5px;cursor:pointer;}
+  button:hover{opacity:0.9;}
+  table{width:100%;border-collapse:collapse;font-size:13.5px;}
+  th,td{text-align:left;padding:12px 10px;border-bottom:1px solid var(--line);vertical-align:top;}
+  th{color:var(--slate);font-family:'JetBrains Mono';font-size:11.5px;text-transform:uppercase;letter-spacing:0.4px;}
+  .msg{max-width:320px;color:var(--slate);}
+  .del{background:transparent;border:1px solid var(--line);color:var(--slate);padding:6px 12px;border-radius:8px;font-size:12px;}
+  .del:hover{border-color:#ff6b6b;color:#ff6b6b;}
+  .empty{color:var(--slate);padding:30px 0;text-align:center;}
+  .status{font-size:13px;color:var(--slate);margin-bottom:16px;}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Inquiries</h1>
+  <p class="sub">Internal view of contact form submissions. Not linked from the public site.</p>
+
+  <div class="auth-box">
+    <input type="password" id="key" placeholder="Admin key">
+    <button id="load">Load inquiries</button>
+  </div>
+  <div class="status" id="status"></div>
+  <div id="results"></div>
+</div>
+
+<script>
+  const keyInput = document.getElementById('key');
+  const statusEl = document.getElementById('status');
+  const results = document.getElementById('results');
+
+  // remember key locally for convenience during a session only
+  keyInput.value = sessionStorage.getItem('axion_admin_key') || '';
+
+  document.getElementById('load').addEventListener('click', load);
+  keyInput.addEventListener('keydown', e => { if (e.key === 'Enter') load(); });
+
+  async function load() {
+    const key = keyInput.value.trim();
+    sessionStorage.setItem('axion_admin_key', key);
+    statusEl.textContent = 'Loading…';
+    results.innerHTML = '';
+    try {
+      const res = await fetch('/api/admin/inquiries', { headers: { 'x-admin-key': key } });
+      const data = await res.json();
+      if (!res.ok) {
+        statusEl.textContent = data.error || 'Failed to load.';
+        return;
+      }
+      statusEl.textContent = data.count + ' inquiries';
+      render(data.inquiries);
+    } catch (err) {
+      statusEl.textContent = 'Network error.';
+    }
+  }
+
+  function render(list) {
+    if (!list.length) {
+      results.innerHTML = '<div class="empty">No inquiries yet.</div>';
+      return;
+    }
+    const rows = list.map(i => `
+      <tr>
+        <td>${new Date(i.createdAt).toLocaleString()}</td>
+        <td>${escapeHtml(i.name)}</td>
+        <td>${escapeHtml(i.email)}</td>
+        <td>${escapeHtml(i.company || '—')}</td>
+        <td>${escapeHtml(i.service || 'general')}</td>
+        <td class="msg">${escapeHtml(i.message)}</td>
+        <td><button class="del" data-id="${i.id}">Delete</button></td>
+      </tr>
+    `).join('');
+    results.innerHTML = `<table><thead><tr>
+      <th>Received</th><th>Name</th><th>Email</th><th>Company</th><th>Service</th><th>Message</th><th></th>
+    </tr></thead><tbody>${rows}</tbody></table>`;
+
+    results.querySelectorAll('.del').forEach(btn => {
+      btn.addEventListener('click', async () => {
+        const key = keyInput.value.trim();
+        await fetch('/api/admin/inquiries/' + btn.dataset.id, { method: 'DELETE', headers: { 'x-admin-key': key } });
+        load();
+      });
+    });
+  }
+
+  function escapeHtml(str) {
+    const div = document.createElement('div');
+    div.textContent = str;
+    return div.innerHTML;
+  }
+</script>
+</body>
+</html>
