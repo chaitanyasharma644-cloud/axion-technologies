@@ -9,7 +9,7 @@ const PORT = process.env.PORT || 3000;
 const ADMIN_KEY = process.env.ADMIN_KEY || 'changeme';
 const RESEND_API_KEY = process.env.RESEND_API_KEY || '';
 const NOTIFY_EMAIL = process.env.NOTIFY_EMAIL || '';
-const FROM_EMAIL = process.env.FROM_EMAIL || 'Axion Technologies <onboarding@resend.dev>';
+const FROM_EMAIL = process.env.FROM_EMAIL || 'Hindustan Group <onboarding@resend.dev>';
 const SITE_URL = (process.env.SITE_URL || `http://localhost:${PORT}`).replace(/\/$/, '');
 const CONSULTATION_PRICE_CENTS = parseInt(process.env.CONSULTATION_PRICE_CENTS || '19900', 10);
 const STRIPE_SECRET_KEY = process.env.STRIPE_SECRET_KEY || '';
@@ -236,7 +236,7 @@ app.post('/api/checkout/consultation', async (req, res) => {
           unit_amount: CONSULTATION_PRICE_CENTS,
           product_data: {
             name: '60-Minute IT Strategy Session',
-            description: 'One-on-one consultation with an Axion engineer — architecture review, roadmap, or vendor audit.',
+            description: 'One-on-one consultation with a Hindustan Group engineer — architecture review, roadmap, or vendor audit.',
           }
         },
         quantity: 1
@@ -254,7 +254,7 @@ app.post('/api/checkout/consultation', async (req, res) => {
 
 // ---------- start ----------
 app.listen(PORT, () => {
-  console.log(`Axion Technologies server running on http://localhost:${PORT}`);
+  console.log(`Hindustan Group server running on http://localhost:${PORT}`);
   if (ADMIN_KEY === 'changeme') {
     console.warn('WARNING: ADMIN_KEY is using the default value. Set a real one in your .env before deploying.');
   }

@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Axion — Admin</title>
+<title>Hindustan Group — Admin</title>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
   :root{--void:#08090d;--panel:#0f1220;--panel-2:#141830;--cyan:#4ce0d2;--amber:#ffb86b;--ink:#edeff7;--slate:#8a8fa3;--line:rgba(237,239,247,0.09);}
@@ -45,14 +45,14 @@
   const results = document.getElementById('results');
 
   // remember key locally for convenience during a session only
-  keyInput.value = sessionStorage.getItem('axion_admin_key') || '';
+  keyInput.value = sessionStorage.getItem('hg_admin_key') || '';
 
   document.getElementById('load').addEventListener('click', load);
   keyInput.addEventListener('keydown', e => { if (e.key === 'Enter') load(); });
 
   async function load() {
     const key = keyInput.value.trim();
-    sessionStorage.setItem('axion_admin_key', key);
+    sessionStorage.setItem('hg_admin_key', key);
     statusEl.textContent = 'Loading…';
     results.innerHTML = '';
     try {
