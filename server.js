@@ -8,7 +8,7 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 const ADMIN_KEY = process.env.ADMIN_KEY || 'changeme';
 const RESEND_API_KEY = process.env.RESEND_API_KEY || '';
-const NOTIFY_EMAIL = process.env.NOTIFY_EMAIL || '';
+const NOTIFY_EMAIL = process.env.NOTIFY_EMAIL || 'hindustangroupjammu@gmail.com';
 const FROM_EMAIL = process.env.FROM_EMAIL || 'Hindustan Group <onboarding@resend.dev>';
 const SITE_URL = (process.env.SITE_URL || `http://localhost:${PORT}`).replace(/\/$/, '');
 const CONSULTATION_PRICE_CENTS = parseInt(process.env.CONSULTATION_PRICE_CENTS || '19900', 10);
@@ -17,6 +17,7 @@ const STRIPE_PUBLISHABLE_KEY = process.env.STRIPE_PUBLISHABLE_KEY || '';
 const stripe = STRIPE_SECRET_KEY ? require('stripe')(STRIPE_SECRET_KEY) : null;
 const DATA_DIR = path.join(__dirname, 'data');
 const DB_FILE = path.join(DATA_DIR, 'inquiries.json');
+const SERVICES_FILE = path.join(DATA_DIR, 'services.json');
 
 // ---------- tiny JSON-file "database" ----------
 function ensureDb() {
@@ -24,6 +25,23 @@ function ensureDb() {
   if (!fs.existsSync(DB_FILE)) fs.writeFileSync(DB_FILE, '[]', 'utf-8');
 }
 ensureDb();
+
+function readServices() {
+  try {
+    const raw = fs.readFileSync(SERVICES_FILE, 'utf-8');
+    const list = JSON.parse(raw);
+    return Array.isArray(list) ? list : [];
+  } catch (err) {
+    console.error('Failed to read services.json:', err.message);
+    return [];
+  }
+}
+
+function serviceLabel(id) {
+  if (!id) return 'General inquiry';
+  const match = readServices().find(s => s.id === id);
+  return match ? match.title : id;
+}
 
 let writeQueue = Promise.resolve();
 function readInquiries() {
@@ -39,6 +57,7 @@ function writeInquiries(list) {
 }
 
 // ---------- middleware ----------
+app.set('trust proxy', 1);
 app.use(express.json({ limit: '20kb' }));
 app.use(express.static(path.join(__dirname, 'public')));
 
@@ -71,17 +90,31 @@ function adminAuth(req, res, next) {
 
 // ---------- validation ----------
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+const PHONE_RE = /^(\+91[\s-]?)?[6-9]\d{9}$/;
+
+function normalizePhone(raw) {
+  const digits = String(raw || '').replace(/\D/g, '');
+  if (!digits) return '';
+  if (digits.length === 10) return '+91' + digits;
+  if (digits.length === 12 && digits.startsWith('91')) return '+' + digits;
+  return String(raw || '').trim();
+}
 
 function validateContact(body) {
   const errors = {};
   const name = (body.name || '').toString().trim();
   const email = (body.email || '').toString().trim();
+  const phone = normalizePhone(body.phone);
   const company = (body.company || '').toString().trim();
   const service = (body.service || '').toString().trim();
   const message = (body.message || '').toString().trim();
+  const services = readServices();
+  const validServiceIds = new Set(services.map(s => s.id));
 
   if (!name || name.length < 2) errors.name = 'Please enter your name.';
   if (!email || !EMAIL_RE.test(email)) errors.email = 'Please enter a valid email.';
+  if (phone && !PHONE_RE.test(phone.replace(/\s/g, ''))) errors.phone = 'Please enter a valid 10-digit mobile number.';
+  if (service && !validServiceIds.has(service)) errors.service = 'Please choose a valid service.';
   if (!message || message.length < 10) errors.message = 'Message should be at least 10 characters.';
   if (name.length > 120) errors.name = 'Name is too long.';
   if (message.length > 4000) errors.message = 'Message is too long.';
@@ -89,48 +122,68 @@ function validateContact(body) {
   return {
     valid: Object.keys(errors).length === 0,
     errors,
-    clean: { name, email, company, service, message }
+    clean: { name, email, phone, company, service, message }
   };
 }
 
 // ---------- email notifications ----------
-async function notifyNewInquiry(inquiry) {
-  if (!RESEND_API_KEY || !NOTIFY_EMAIL) return;
+async function sendEmail({ to, subject, html }) {
+  if (!RESEND_API_KEY) return false;
+  const res = await fetch('https://api.resend.com/emails', {
+    method: 'POST',
+    headers: {
+      Authorization: `Bearer ${RESEND_API_KEY}`,
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({ from: FROM_EMAIL, to, subject, html })
+  });
+  if (!res.ok) {
+    console.error('Email send failed:', await res.text());
+    return false;
+  }
+  return true;
+}
 
-  const serviceLabel = inquiry.service || 'General inquiry';
-  const body = `
-    <h2>New project inquiry</h2>
+async function notifyNewInquiry(inquiry) {
+  if (!NOTIFY_EMAIL) return;
+
+  const label = serviceLabel(inquiry.service);
+  const staffBody = `
+    <h2>New inquiry — Hindustan Group</h2>
     <p><strong>Name:</strong> ${escapeHtml(inquiry.name)}</p>
     <p><strong>Email:</strong> <a href="mailto:${escapeHtml(inquiry.email)}">${escapeHtml(inquiry.email)}</a></p>
+    <p><strong>Phone:</strong> ${escapeHtml(inquiry.phone || '—')}</p>
     <p><strong>Company:</strong> ${escapeHtml(inquiry.company || '—')}</p>
-    <p><strong>Service:</strong> ${escapeHtml(serviceLabel)}</p>
+    <p><strong>Service:</strong> ${escapeHtml(label)}</p>
     <p><strong>Message:</strong></p>
     <p>${escapeHtml(inquiry.message).replace(/\n/g, '<br>')}</p>
     <hr>
-    <p style="color:#666;font-size:12px;">Submitted ${inquiry.createdAt} · Reply within one business day to convert this lead.</p>
+    <p style="color:#666;font-size:12px;">Submitted ${inquiry.createdAt} · Reply promptly to convert this lead.</p>
   `;
 
-  try {
-    const res = await fetch('https://api.resend.com/emails', {
-      method: 'POST',
-      headers: {
-        Authorization: `Bearer ${RESEND_API_KEY}`,
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        from: FROM_EMAIL,
-        to: [NOTIFY_EMAIL],
-        subject: `New lead: ${inquiry.name} — ${serviceLabel}`,
-        html: body
-      })
-    });
-    if (!res.ok) {
-      const err = await res.text();
-      console.error('Resend notification failed:', err);
-    }
-  } catch (err) {
-    console.error('Failed to send lead notification:', err);
-  }
+  await sendEmail({
+    to: [NOTIFY_EMAIL],
+    subject: `New lead: ${inquiry.name} — ${label}`,
+    html: staffBody
+  });
+
+  const customerBody = `
+    <h2>We received your message</h2>
+    <p>Hi ${escapeHtml(inquiry.name)},</p>
+    <p>Thank you for contacting Hindustan Group. We have received your inquiry about <strong>${escapeHtml(label)}</strong> and will reply within one business day.</p>
+    <p><strong>Your message:</strong><br>${escapeHtml(inquiry.message).replace(/\n/g, '<br>')}</p>
+    <hr>
+    <p style="color:#666;font-size:12px;">
+      Hindustan Group · A Block, Bahu Plaza, Jammu<br>
+      +91 60053 93770 · hindustangroupjammu@gmail.com
+    </p>
+  `;
+
+  await sendEmail({
+    to: [inquiry.email],
+    subject: 'We received your inquiry — Hindustan Group',
+    html: customerBody
+  });
 }
 
 function escapeHtml(str) {
@@ -145,17 +198,11 @@ function escapeHtml(str) {
 
 // list of services the frontend renders dynamically
 app.get('/api/services', (req, res) => {
-  res.json({
-    ok: true,
-    services: [
-      { id: 'cloud', code: '01', title: 'Cloud Infrastructure & Migration', desc: 'Architecture, provisioning, and migration across AWS, Azure, and GCP — sized to your traffic, not oversold.' },
-      { id: 'security', code: '02', title: 'Cybersecurity & Compliance', desc: 'Threat monitoring, penetration testing, and audit-ready compliance for SOC 2, ISO 27001, and GDPR.' },
-      { id: 'software', code: '03', title: 'Custom Software Development', desc: 'Web, mobile, and internal tooling — designed with your workflows in mind, shipped in weeks not quarters.' },
-      { id: 'ai', code: '04', title: 'AI & Data Engineering', desc: 'Pipelines, model integration, and analytics infrastructure that turn raw data into working decisions.' },
-      { id: 'support', code: '05', title: 'Managed IT Support', desc: 'Round-the-clock helpdesk, endpoint management, and network monitoring so nothing waits till Monday.' },
-      { id: 'consulting', code: '06', title: 'IT Consulting & Strategy', desc: 'Roadmaps, vendor audits, and technical due diligence for teams deciding what to build next.' }
-    ]
-  });
+  const services = readServices();
+  if (!services.length) {
+    return res.status(500).json({ ok: false, error: 'Services unavailable right now.' });
+  }
+  res.json({ ok: true, services });
 });
 
 // submit contact / project inquiry -> stored in DB
@@ -168,6 +215,7 @@ app.post('/api/contact', rateLimit, async (req, res) => {
   const inquiry = {
     id: Date.now().toString(36) + Math.random().toString(36).slice(2, 8),
     ...clean,
+    serviceLabel: serviceLabel(clean.service),
     createdAt: new Date().toISOString(),
     ip: req.ip
   };
@@ -199,7 +247,15 @@ app.delete('/api/admin/inquiries/:id', adminAuth, async (req, res) => {
 });
 
 // health check for deploy platforms
-app.get('/api/health', (req, res) => res.json({ ok: true, uptime: process.uptime() }));
+app.get('/api/health', (req, res) => {
+  const services = readServices();
+  res.json({
+    ok: true,
+    uptime: process.uptime(),
+    services: services.length,
+    emailAlerts: Boolean(RESEND_API_KEY && NOTIFY_EMAIL)
+  });
+});
 
 // public config for frontend (no secrets)
 app.get('/api/config', (req, res) => {
@@ -258,8 +314,8 @@ app.listen(PORT, () => {
   if (ADMIN_KEY === 'changeme') {
     console.warn('WARNING: ADMIN_KEY is using the default value. Set a real one in your .env before deploying.');
   }
-  if (!RESEND_API_KEY || !NOTIFY_EMAIL) {
-    console.warn('TIP: Set RESEND_API_KEY + NOTIFY_EMAIL to get instant email alerts when leads submit the contact form.');
+  if (!RESEND_API_KEY) {
+    console.warn('TIP: Set RESEND_API_KEY to email leads to ' + NOTIFY_EMAIL + ' automatically.');
   }
   if (!stripe) {
     console.warn('TIP: Set STRIPE_SECRET_KEY + STRIPE_PUBLISHABLE_KEY to enable paid $' + (CONSULTATION_PRICE_CENTS / 100) + ' strategy sessions.');

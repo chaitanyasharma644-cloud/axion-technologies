@@ -1,0 +1,44 @@
+[
+  {
+    "id": "hardware",
+    "code": "01",
+    "title": "Computer & Laptop Sales & Service",
+    "desc": "New and refurbished systems, repairs, upgrades, and on-site troubleshooting for offices and home users across Jammu."
+  },
+  {
+    "id": "networking",
+    "code": "02",
+    "title": "Networking, Wi-Fi & LAN Setup",
+    "desc": "Structured cabling, router configuration, office Wi-Fi, and secure LAN design for reliable connectivity."
+  },
+  {
+    "id": "cctv",
+    "code": "03",
+    "title": "CCTV & Security Systems",
+    "desc": "IP and analog camera installation, DVR/NVR setup, remote viewing, and maintenance for shops, offices, and homes."
+  },
+  {
+    "id": "software",
+    "code": "04",
+    "title": "Software & Website Development",
+    "desc": "Business websites, billing software, inventory systems, and custom apps built around how your team actually works."
+  },
+  {
+    "id": "cloud",
+    "code": "05",
+    "title": "Cloud, Server & Data Backup",
+    "desc": "Server setup, cloud migration, automated backups, and disaster recovery so your data survives hardware failure."
+  },
+  {
+    "id": "amc",
+    "code": "06",
+    "title": "Annual Maintenance (AMC)",
+    "desc": "Scheduled visits, priority support, and preventive care for your computers, network, and printers — one fixed yearly plan."
+  },
+  {
+    "id": "consulting",
+    "code": "07",
+    "title": "IT Consulting & Support",
+    "desc": "Honest advice on what to buy, what to fix, and what to replace — plus remote and on-site support when things break."
+  }
+]

@@ -19,36 +19,45 @@
 
 // ---------- icons per service id ----------
 const ICONS = {
-  cloud: '<path d="M17.5 19H8.5A5.5 5.5 0 1 1 9.7 8.1 6 6 0 0 1 21 11.5a4 4 0 0 1-3.5 7.5Z"/>',
-  security: '<path d="M12 2 4 6v6c0 5 3.4 8.7 8 10 4.6-1.3 8-5 8-10V6l-8-4Z"/>',
+  hardware: '<rect x="3" y="4" width="18" height="12" rx="2"/><path d="M8 20h8M12 16v4"/>',
+  networking: '<path d="M12 2v4M12 18v4M4.9 4.9l2.8 2.8M16.3 16.3l2.8 2.8M2 12h4M18 12h4"/><circle cx="12" cy="12" r="3"/>',
+  cctv: '<path d="M4 8V6a2 2 0 0 1 2-2h8l4 4v10a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2v-2"/><circle cx="12" cy="13" r="3"/>',
   software: '<path d="m7 8-4 4 4 4M17 8l4 4-4 4M14 4l-4 16"/>',
-  ai: '<circle cx="12" cy="12" r="3"/><path d="M12 2v4M12 18v4M4.9 4.9l2.8 2.8M16.3 16.3l2.8 2.8M2 12h4M18 12h4M4.9 19.1l2.8-2.8M16.3 7.7l2.8-2.8"/>',
-  support: '<rect x="3" y="4" width="18" height="14" rx="2"/><path d="M8 21h8M12 18v3"/>',
+  cloud: '<path d="M17.5 19H8.5A5.5 5.5 0 1 1 9.7 8.1 6 6 0 0 1 21 11.5a4 4 0 0 1-3.5 7.5Z"/>',
+  amc: '<path d="M12 2 4 6v6c0 5 3.4 8.7 8 10 4.6-1.3 8-5 8-10V6l-8-4Z"/><path d="M9 12l2 2 4-4"/>',
   consulting: '<path d="M3 3v18h18M7 15l4-6 4 4 4-8"/>'
 };
 
 // ---------- fetch services from backend and render ----------
 async function loadServices() {
   const grid = document.getElementById('services-grid');
-  if (!grid) return;
+  const select = document.getElementById('service');
   try {
     const res = await fetch('/api/services');
     if (!res.ok) throw new Error('bad response');
     const data = await res.json();
     if (!data.ok || !Array.isArray(data.services)) throw new Error('bad payload');
 
-    grid.innerHTML = data.services.map(s => `
-      <div class="service-card" data-tilt>
-        <span class="tag mono">${s.code}</span>
-        <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">${ICONS[s.id] || ''}</svg></div>
-        <h3>${escapeHtml(s.title)}</h3>
-        <p>${escapeHtml(s.desc)}</p>
-      </div>
-    `).join('');
+    if (grid) {
+      grid.innerHTML = data.services.map(s => `
+        <div class="service-card" data-tilt>
+          <span class="tag mono">${s.code}</span>
+          <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">${ICONS[s.id] || ''}</svg></div>
+          <h3>${escapeHtml(s.title)}</h3>
+          <p>${escapeHtml(s.desc)}</p>
+        </div>
+      `).join('');
+      attachTilt();
+    }
 
-    attachTilt();
+    if (select) {
+      select.innerHTML = '<option value="">General inquiry</option>' +
+        data.services.map(s => `<option value="${escapeHtml(s.id)}">${escapeHtml(s.title)}</option>`).join('');
+    }
   } catch (err) {
-    grid.innerHTML = '<div class="services-loading mono">Couldn\'t load services right now — refresh to try again.</div>';
+    if (grid) {
+      grid.innerHTML = '<div class="services-loading mono">Couldn\'t load services right now — refresh to try again.</div>';
+    }
     console.error('Failed to load services:', err);
   }
 }
@@ -92,7 +101,7 @@ function attachTilt() {
   }
 
   function clearErrors() {
-    ['name', 'email', 'message'].forEach(field => {
+    ['name', 'email', 'phone', 'message'].forEach(field => {
       const errEl = document.getElementById('err-' + field);
       const input = document.getElementById(field);
       if (errEl) errEl.textContent = '';
@@ -118,6 +127,7 @@ function attachTilt() {
     const payload = {
       name: document.getElementById('name').value,
       email: document.getElementById('email').value,
+      phone: document.getElementById('phone').value,
       company: document.getElementById('company').value,
       service: document.getElementById('service').value,
       message: document.getElementById('message').value

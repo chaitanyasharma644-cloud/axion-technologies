@@ -76,8 +76,8 @@
   <div class="wrap">
     <div class="section-head">
       <span class="section-eyebrow">What we do</span>
-      <h2>IT services built around continuity, not just delivery.</h2>
-      <p>Six practice areas, one team. We stay accountable for what we build long after launch.</p>
+      <h2>Seven services, one team based in Jammu.</h2>
+      <p>From computer repair to CCTV and AMC — we handle the full stack so you don't juggle multiple vendors.</p>
     </div>
     <div class="services-grid" id="services-grid">
       <div class="services-loading mono">Loading services…</div>
@@ -172,17 +172,17 @@
             <input type="text" id="company" name="company" autocomplete="organization">
           </div>
           <div class="field">
-            <label for="service">Interested in</label>
-            <select id="service" name="service">
-              <option value="">General inquiry</option>
-              <option value="cloud">Cloud Infrastructure & Migration</option>
-              <option value="security">Cybersecurity & Compliance</option>
-              <option value="software">Custom Software Development</option>
-              <option value="ai">AI & Data Engineering</option>
-              <option value="support">Managed IT Support</option>
-              <option value="consulting">IT Consulting & Strategy</option>
-            </select>
+            <label for="phone">Phone</label>
+            <input type="tel" id="phone" name="phone" autocomplete="tel" placeholder="6005393770">
+            <span class="field-error" id="err-phone"></span>
           </div>
+        </div>
+        <div class="field">
+          <label for="service">Interested in</label>
+          <select id="service" name="service">
+            <option value="">Loading services…</option>
+          </select>
+          <span class="field-error" id="err-service"></span>
         </div>
         <div class="field">
           <label for="message">What are you trying to solve?</label>

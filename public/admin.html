@@ -79,14 +79,15 @@
         <td>${new Date(i.createdAt).toLocaleString()}</td>
         <td>${escapeHtml(i.name)}</td>
         <td>${escapeHtml(i.email)}</td>
+        <td>${escapeHtml(i.phone || '—')}</td>
         <td>${escapeHtml(i.company || '—')}</td>
-        <td>${escapeHtml(i.service || 'general')}</td>
+        <td>${escapeHtml(i.serviceLabel || i.service || 'General inquiry')}</td>
         <td class="msg">${escapeHtml(i.message)}</td>
         <td><button class="del" data-id="${i.id}">Delete</button></td>
       </tr>
     `).join('');
     results.innerHTML = `<table><thead><tr>
-      <th>Received</th><th>Name</th><th>Email</th><th>Company</th><th>Service</th><th>Message</th><th></th>
+      <th>Received</th><th>Name</th><th>Email</th><th>Phone</th><th>Company</th><th>Service</th><th>Message</th><th></th>
     </tr></thead><tbody>${rows}</tbody></table>`;
 
     results.querySelectorAll('.del').forEach(btn => {
