@@ -29,7 +29,7 @@
 <body>
 <div class="wrap">
   <h1>Inquiries</h1>
-  <p class="sub">Internal view of contact form submissions. Not linked from the public site.</p>
+  <p class="sub">Internal view of demo bookings and contact submissions.</p>
 
   <div class="auth-box">
     <input type="password" id="key" placeholder="Admin key">
@@ -82,12 +82,13 @@
         <td>${escapeHtml(i.phone || '—')}</td>
         <td>${escapeHtml(i.company || '—')}</td>
         <td>${escapeHtml(i.serviceLabel || i.service || 'General inquiry')}</td>
+        <td>${escapeHtml(i.plan || '—')}</td>
         <td class="msg">${escapeHtml(i.message)}</td>
         <td><button class="del" data-id="${i.id}">Delete</button></td>
       </tr>
     `).join('');
     results.innerHTML = `<table><thead><tr>
-      <th>Received</th><th>Name</th><th>Email</th><th>Phone</th><th>Company</th><th>Service</th><th>Message</th><th></th>
+      <th>Received</th><th>Name</th><th>Email</th><th>Phone</th><th>Company</th><th>Industry</th><th>Plan</th><th>Message</th><th></th>
     </tr></thead><tbody>${rows}</tbody></table>`;
 
     results.querySelectorAll('.del').forEach(btn => {

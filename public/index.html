@@ -3,248 +3,332 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Hindustan Group — IT Services | Jammu</title>
-<meta name="description" content="A unit of Hindustan Group — cloud infrastructure, cybersecurity, custom software, AI & data engineering, managed IT support, and IT consulting in Jammu.">
+<title>AI Employee — 24/7 AI Staff for Small Businesses</title>
+<meta name="description" content="AI Employee answers calls, WhatsApp, Instagram DMs and emails 24/7. Books appointments and follows up leads — built for Indian businesses in Hindi, English, Punjabi and more.">
+<script src="https://cdn.tailwindcss.com"></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/css/style.css">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+body { font-family: 'Inter', sans-serif; }
+.gradient-text {
+  background: linear-gradient(135deg, #22d3ee 0%, #3b82f6 50%, #a855f7 100%);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+}
+</style>
 </head>
-<body>
+<body class="bg-slate-950 text-white antialiased">
 
-<div class="grid-bg"></div>
-
-<header>
-  <nav>
-    <a href="#top" class="logo">
-      <span class="logo-mark">
-        <svg viewBox="0 0 26 26" fill="none">
-          <circle cx="13" cy="13" r="3" fill="#4ce0d2"/>
-          <ellipse cx="13" cy="13" rx="12" ry="5" stroke="#4ce0d2" stroke-width="1.4"/>
-          <ellipse cx="13" cy="13" rx="12" ry="5" stroke="#ffb86b" stroke-width="1.4" transform="rotate(60 13 13)"/>
-          <ellipse cx="13" cy="13" rx="12" ry="5" stroke="#8a8fa3" stroke-width="1" transform="rotate(120 13 13)"/>
-        </svg>
-      </span>
-      HINDUSTAN
-    </a>
-    <div class="nav-links" id="nav-links">
-      <a href="#services">Services</a>
-      <a href="#process">Process</a>
-      <a href="#stats">Why Us</a>
-      <a href="#contact">Contact</a>
+<nav class="fixed w-full z-50 top-0 border-b border-slate-800/50 bg-slate-950/80 backdrop-blur-xl">
+  <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+    <div class="flex items-center gap-3">
+      <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-cyan-400 to-blue-600 flex items-center justify-center shadow-lg shadow-cyan-500/20">
+        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+      </div>
+      <span class="text-xl font-bold tracking-tight">AI<span class="text-cyan-400">Employee</span></span>
     </div>
-    <div style="display:flex;align-items:center;gap:14px;">
-      <a href="#contact" class="btn">Book a Consultation</a>
-      <button id="nav-toggle" class="nav-toggle" aria-label="Open menu" aria-expanded="false">
-        <span></span><span></span><span></span>
-      </button>
+    <div class="hidden md:flex items-center gap-8 text-sm font-medium text-slate-400">
+      <a href="#features" class="hover:text-cyan-400 transition-colors">Features</a>
+      <a href="#industries" class="hover:text-cyan-400 transition-colors">Industries</a>
+      <a href="#testimonials" class="hover:text-cyan-400 transition-colors">Reviews</a>
+      <a href="#demo" class="hover:text-cyan-400 transition-colors">Demo</a>
+      <a href="#pricing" class="hover:text-cyan-400 transition-colors">Pricing</a>
+      <a href="#contact" class="hover:text-cyan-400 transition-colors">Contact</a>
     </div>
-  </nav>
-  <div class="nav-mobile" id="nav-mobile">
-    <a href="#services">Services</a>
-    <a href="#process">Process</a>
-    <a href="#stats">Why Axion</a>
-    <a href="#contact">Contact</a>
+    <a href="#contact" class="hidden md:block px-6 py-2.5 rounded-full bg-gradient-to-r from-cyan-500 to-blue-600 font-semibold text-sm hover:shadow-lg hover:shadow-cyan-500/25 transition-all hover:scale-105">Book Demo</a>
   </div>
-</header>
+</nav>
 
-<section class="hero" id="top">
-  <canvas id="hero-canvas"></canvas>
-  <div class="wrap">
-    <div class="hero-grid">
-      <div>
-        <span class="eyebrow">A Unit of Hindustan Group · Jammu</span>
-        <h1>We build the technology<br>your business <em>runs on.</em></h1>
-        <p>Hindustan Group's IT services unit designs, builds, and maintains the cloud infrastructure, software, and security systems that keep growing businesses stable — not just running, but built to hold weight.</p>
-        <div class="hero-ctas">
-          <a href="#contact" class="btn">Start a Project</a>
-          <button type="button" class="btn btn-ghost" id="hero-consult-btn" hidden>Book Strategy Session</button>
-          <a href="#services" class="btn btn-ghost">See our services</a>
+<!-- HERO -->
+<section class="pt-32 pb-20 px-6 relative overflow-hidden">
+  <div class="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[800px] bg-cyan-500/10 rounded-full blur-3xl"></div>
+  <div class="absolute bottom-0 right-0 w-[600px] h-[600px] bg-blue-500/10 rounded-full blur-3xl"></div>
+  <div class="max-w-7xl mx-auto relative z-10">
+    <div class="flex flex-col lg:flex-row items-center gap-16">
+      <div class="lg:w-1/2 text-center lg:text-left">
+        <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-cyan-500/10 border border-cyan-500/20 text-cyan-400 text-sm font-medium mb-6">
+          <span class="relative flex h-2 w-2"><span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyan-400 opacity-75"></span><span class="relative inline-flex rounded-full h-2 w-2 bg-cyan-400"></span></span>
+          Now Serving 500+ Indian Businesses
         </div>
-        <div class="hero-meta">
-          <div><span class="num">120+</span><span class="lbl mono">CLIENTS SERVED</span></div>
-          <div><span class="num">99.98%</span><span class="lbl mono">AVG. UPTIME SLA</span></div>
-          <div><span class="num">11yr</span><span class="lbl mono">IN OPERATION</span></div>
-          <div><span class="num">24/7</span><span class="lbl mono">SUPPORT DESK</span></div>
+        <h1 class="text-5xl lg:text-7xl font-extrabold leading-[1.1] mb-6 tracking-tight">Hire an AI Employee<br><span class="gradient-text">That Never Sleeps</span></h1>
+        <p class="text-xl text-slate-400 mb-8 leading-relaxed max-w-xl mx-auto lg:mx-0">Answers phone calls, WhatsApp, Instagram DMs, and emails. Books appointments, follows up with leads, and supports customers — <span class="text-white font-semibold">24/7</span>.</p>
+        <div class="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start mb-8">
+          <a href="#contact" class="px-8 py-4 rounded-full bg-gradient-to-r from-cyan-500 to-blue-600 font-bold text-lg hover:shadow-xl hover:shadow-cyan-500/25 transition-all hover:scale-105 flex items-center justify-center gap-2">Start Free Trial<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg></a>
+          <a href="#demo" class="px-8 py-4 rounded-full font-bold text-lg border border-slate-700 hover:border-cyan-500/50 hover:bg-cyan-500/5 transition-all flex items-center justify-center gap-2"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>Watch Demo</a>
+        </div>
+        <div class="flex items-center gap-4 justify-center lg:justify-start">
+          <div class="flex -space-x-3">
+            <div class="w-10 h-10 rounded-full bg-gradient-to-br from-pink-500 to-orange-400 border-2 border-slate-950"></div>
+            <div class="w-10 h-10 rounded-full bg-gradient-to-br from-cyan-500 to-blue-500 border-2 border-slate-950"></div>
+            <div class="w-10 h-10 rounded-full bg-gradient-to-br from-purple-500 to-pink-500 border-2 border-slate-950"></div>
+            <div class="w-10 h-10 rounded-full bg-gradient-to-br from-green-500 to-teal-500 border-2 border-slate-950"></div>
+            <div class="w-10 h-10 rounded-full border-2 border-slate-950 bg-slate-800 flex items-center justify-center text-xs font-bold text-slate-400">+500</div>
+          </div>
+          <div class="text-left">
+            <div class="flex items-center gap-1 text-yellow-400">★★★★★ <span class="text-slate-400 text-sm ml-1">4.9/5</span></div>
+            <div class="text-xs text-slate-500">from verified business owners</div>
+          </div>
         </div>
       </div>
-      <div></div>
-    </div>
-  </div>
-</section>
-
-<section class="section" id="services">
-  <div class="wrap">
-    <div class="section-head">
-      <span class="section-eyebrow">What we do</span>
-      <h2>Seven services, one team based in Jammu.</h2>
-      <p>From computer repair to CCTV and AMC — we handle the full stack so you don't juggle multiple vendors.</p>
-    </div>
-    <div class="services-grid" id="services-grid">
-      <div class="services-loading mono">Loading services…</div>
-    </div>
-  </div>
-</section>
-
-<section class="process" id="process">
-  <div class="wrap section">
-    <div class="section-head">
-      <span class="section-eyebrow">How we work</span>
-      <h2>A fixed process, applied to every engagement.</h2>
-    </div>
-    <div class="process-list">
-      <div class="process-item">
-        <span class="process-num mono">01 / DISCOVER</span>
-        <h3>Audit &amp; scope</h3>
-        <p>We map your current systems, constraints, and goals before proposing anything — usually within the first week.</p>
-      </div>
-      <div class="process-item">
-        <span class="process-num mono">02 / DESIGN</span>
-        <h3>Architecture &amp; plan</h3>
-        <p>A concrete technical plan with milestones, cost boundaries, and rollback paths — reviewed with your team before build starts.</p>
-      </div>
-      <div class="process-item">
-        <span class="process-num mono">03 / DEPLOY</span>
-        <h3>Build &amp; ship</h3>
-        <p>Iterative delivery with staging environments, so you see working systems throughout, not just at the end.</p>
-      </div>
-      <div class="process-item">
-        <span class="process-num mono">04 / SUPPORT</span>
-        <h3>Monitor &amp; maintain</h3>
-        <p>Post-launch monitoring, patching, and a direct line to the engineers who built it — not a ticket queue.</p>
+      <div class="lg:w-1/2">
+        <div class="relative">
+          <div class="absolute -inset-4 bg-gradient-to-r from-cyan-500 to-blue-600 rounded-2xl opacity-20 blur-xl"></div>
+          <div class="relative bg-slate-900 rounded-2xl border border-slate-700 shadow-2xl overflow-hidden">
+            <div class="flex items-center gap-2 px-4 py-3 bg-slate-800 border-b border-slate-700">
+              <div class="w-3 h-3 rounded-full bg-red-500"></div><div class="w-3 h-3 rounded-full bg-yellow-500"></div><div class="w-3 h-3 rounded-full bg-green-500"></div>
+              <span class="ml-2 text-xs text-slate-500 font-mono">AI Employee Dashboard — Live</span>
+            </div>
+            <div class="p-4 space-y-3">
+              <div class="flex items-center gap-3 p-3 rounded-lg bg-slate-800/50 border border-slate-700/50">
+                <div class="w-10 h-10 rounded-full bg-green-500/20 flex items-center justify-center text-green-400">📞</div>
+                <div class="flex-1"><div class="text-sm font-medium">Incoming Call — Sharma Dental Clinic</div><div class="text-xs text-green-400">AI Answering • Booking: Root Canal, 3:00 PM</div></div>
+                <span class="text-xs text-slate-500">Now</span>
+              </div>
+              <div class="flex items-center gap-3 p-3 rounded-lg bg-slate-800/50 border border-slate-700/50">
+                <div class="w-10 h-10 rounded-full bg-blue-500/20 flex items-center justify-center">💬</div>
+                <div class="flex-1"><div class="text-sm font-medium">WhatsApp — Gold's Gym Jammu</div><div class="text-xs text-blue-400">AI Replied • Membership brochure sent</div></div>
+                <span class="text-xs text-slate-500">2m ago</span>
+              </div>
+              <div class="flex items-center gap-3 p-3 rounded-lg bg-slate-800/50 border border-slate-700/50">
+                <div class="w-10 h-10 rounded-full bg-purple-500/20 flex items-center justify-center">📸</div>
+                <div class="flex-1"><div class="text-sm font-medium">Instagram DM — Sharma Motors</div><div class="text-xs text-purple-400">AI Confirmed • Test drive: Sat 11 AM</div></div>
+                <span class="text-xs text-slate-500">5m ago</span>
+              </div>
+              <div class="flex items-center gap-3 p-3 rounded-lg bg-slate-800/50 border border-slate-700/50">
+                <div class="w-10 h-10 rounded-full bg-pink-500/20 flex items-center justify-center">✉️</div>
+                <div class="flex-1"><div class="text-sm font-medium">Email — Royal Estate Agency</div><div class="text-xs text-pink-400">AI Sent • Property catalog + meeting link</div></div>
+                <span class="text-xs text-slate-500">8m ago</span>
+              </div>
+            </div>
+            <div class="px-4 py-3 bg-slate-800/50 border-t border-slate-700 flex justify-between items-center">
+              <span class="text-xs text-slate-500">24 conversations handled today</span>
+              <span class="text-xs text-green-400 font-medium">98% satisfaction rate ↑</span>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
 </section>
 
-<section class="section" id="stats">
-  <div class="wrap">
-    <div class="section-head">
-      <span class="section-eyebrow">Why Hindustan Group</span>
-      <h2>Numbers our clients actually check.</h2>
+<!-- LANGUAGE BANNER -->
+<section class="py-8 px-6 bg-gradient-to-r from-cyan-900/20 to-blue-900/20 border-y border-slate-800/50">
+  <div class="max-w-4xl mx-auto text-center">
+    <div class="inline-flex items-center gap-3 px-6 py-3 rounded-full bg-slate-900 border border-cyan-500/20">
+      <span class="text-2xl">🇮🇳</span>
+      <span class="text-slate-300 font-medium">Built for India — Speaks <span class="text-cyan-400 font-bold">Hindi, English, Punjabi, Dogri, Urdu</span> &amp; more</span>
     </div>
-    <div class="stats-strip">
-      <div class="stat"><div class="num">120+</div><div class="lbl">Businesses supported across 9 industries</div></div>
-      <div class="stat"><div class="num">4.2min</div><div class="lbl">Average critical-ticket response time</div></div>
-      <div class="stat"><div class="num">99.98%</div><div class="lbl">Average infrastructure uptime delivered</div></div>
-      <div class="stat"><div class="num">0</div><div class="lbl">Missed compliance audits to date</div></div>
+    <p class="text-sm text-slate-500 mt-3">Your customers can message in their own language. The AI replies naturally in Hindi, Hinglish, or English.</p>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section id="features" class="py-24 px-6">
+  <div class="max-w-7xl mx-auto">
+    <div class="text-center mb-16">
+      <h2 class="text-4xl lg:text-5xl font-bold mb-4">One AI. Every Channel.</h2>
+      <p class="text-slate-400 text-lg max-w-2xl mx-auto">Your AI Employee handles every customer touchpoint — so you never miss a lead or leave a message unanswered.</p>
+    </div>
+    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div class="p-8 rounded-2xl bg-slate-900 border border-slate-800 hover:border-cyan-500/50 transition-all"><div class="text-3xl mb-4">📞</div><h3 class="text-xl font-bold mb-3">Phone Calls</h3><p class="text-slate-400">Answers incoming calls with natural voice AI. Schedules appointments and routes urgent calls to you.</p></div>
+      <div class="p-8 rounded-2xl bg-slate-900 border border-slate-800 hover:border-cyan-500/50 transition-all"><div class="text-3xl mb-4">💬</div><h3 class="text-xl font-bold mb-3">WhatsApp Business</h3><p class="text-slate-400">Instant replies, order updates, automated follow-ups, and broadcast campaigns.</p></div>
+      <div class="p-8 rounded-2xl bg-slate-900 border border-slate-800 hover:border-cyan-500/50 transition-all"><div class="text-3xl mb-4">📸</div><h3 class="text-xl font-bold mb-3">Instagram DMs</h3><p class="text-slate-400">Engages followers, answers product questions, and converts DMs into confirmed bookings.</p></div>
+      <div class="p-8 rounded-2xl bg-slate-900 border border-slate-800 hover:border-cyan-500/50 transition-all"><div class="text-3xl mb-4">✉️</div><h3 class="text-xl font-bold mb-3">Email Support</h3><p class="text-slate-400">Drafts professional replies, sorts inquiries by priority, and maintains your brand voice.</p></div>
+      <div class="p-8 rounded-2xl bg-slate-900 border border-slate-800 hover:border-cyan-500/50 transition-all"><div class="text-3xl mb-4">📅</div><h3 class="text-xl font-bold mb-3">Smart Booking</h3><p class="text-slate-400">Syncs with Google Calendar, books slots, sends SMS reminders, and handles rescheduling.</p></div>
+      <div class="p-8 rounded-2xl bg-slate-900 border border-slate-800 hover:border-cyan-500/50 transition-all"><div class="text-3xl mb-4">📈</div><h3 class="text-xl font-bold mb-3">Lead Follow-up</h3><p class="text-slate-400">Nurtures leads with personalized drip campaigns and escalates hot prospects to your team.</p></div>
     </div>
   </div>
 </section>
 
-<section class="section cta-section" id="contact">
-  <div class="wrap">
-    <div class="cta-box">
-      <h2>Let's build something stable.</h2>
-      <p>Tell us what you're running today and where it needs to go. We'll reply with a scoped plan, not a sales call.</p>
-      <p class="contact-details mono" style="font-size:13px;color:var(--slate);margin-bottom:24px;line-height:1.7;">
-        A Block, Bahu Plaza, Jammu · <a href="tel:+916005393770" style="color:var(--cyan);">+91 60053 93770</a> · <a href="mailto:hindustangroupjammu@gmail.com" style="color:var(--cyan);">hindustangroupjammu@gmail.com</a>
-      </p>
+<!-- INDUSTRIES -->
+<section id="industries" class="py-24 px-6 bg-slate-900/20">
+  <div class="max-w-7xl mx-auto">
+    <div class="text-center mb-16">
+      <h2 class="text-4xl lg:text-5xl font-bold mb-4">Built for Your Industry</h2>
+      <p class="text-slate-400 text-lg">Tailored AI workflows for the businesses that need it most.</p>
+    </div>
+    <div class="grid md:grid-cols-2 lg:grid-cols-5 gap-4">
+      <div class="p-6 rounded-2xl bg-gradient-to-br from-slate-800 to-slate-900 border border-slate-700 text-center hover:border-cyan-500/50 transition-all"><div class="text-3xl mb-3">🏥</div><h3 class="font-bold mb-2">Clinics</h3><p class="text-xs text-slate-400">Appointments, reminders, prescription refills</p></div>
+      <div class="p-6 rounded-2xl bg-gradient-to-br from-slate-800 to-slate-900 border border-slate-700 text-center hover:border-cyan-500/50 transition-all"><div class="text-3xl mb-3">🚗</div><h3 class="font-bold mb-2">Car Dealers</h3><p class="text-xs text-slate-400">Test drives, inventory queries, financing</p></div>
+      <div class="p-6 rounded-2xl bg-gradient-to-br from-slate-800 to-slate-900 border border-slate-700 text-center hover:border-cyan-500/50 transition-all"><div class="text-3xl mb-3">💪</div><h3 class="font-bold mb-2">Gyms</h3><p class="text-xs text-slate-400">Memberships, class bookings, trainers</p></div>
+      <div class="p-6 rounded-2xl bg-gradient-to-br from-slate-800 to-slate-900 border border-slate-700 text-center hover:border-cyan-500/50 transition-all"><div class="text-3xl mb-3">🍽️</div><h3 class="font-bold mb-2">Restaurants</h3><p class="text-xs text-slate-400">Reservations, menu questions, orders</p></div>
+      <div class="p-6 rounded-2xl bg-gradient-to-br from-slate-800 to-slate-900 border border-slate-700 text-center hover:border-cyan-500/50 transition-all"><div class="text-3xl mb-3">🏠</div><h3 class="font-bold mb-2">Real Estate</h3><p class="text-xs text-slate-400">Property inquiries, site visits, follow-ups</p></div>
+    </div>
+  </div>
+</section>
 
-      <div class="paid-consult" id="paid-consult" hidden>
-        <div class="paid-consult-copy">
-          <span class="section-eyebrow">Fast track</span>
-          <h3>60-minute IT Strategy Session</h3>
-          <p>Skip the back-and-forth. Book a paid session with a senior engineer — architecture review, compliance gap analysis, or build-vs-buy decision. Credited toward any project over $5k.</p>
+<!-- DEMO -->
+<section id="demo" class="py-24 px-6">
+  <div class="max-w-5xl mx-auto text-center">
+    <h2 class="text-4xl lg:text-5xl font-bold mb-4">See It In Action</h2>
+    <p class="text-slate-400 text-lg mb-12">Watch how AI Employee handles a real customer conversation from start to finish.</p>
+    <div class="relative rounded-2xl overflow-hidden border border-slate-700 aspect-video bg-slate-900 flex items-center justify-center group cursor-pointer">
+      <div class="w-20 h-20 rounded-full bg-gradient-to-br from-cyan-500 to-blue-600 flex items-center justify-center mx-auto shadow-lg shadow-cyan-500/30 group-hover:scale-110 transition-transform">
+        <svg class="w-8 h-8 text-white ml-1" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+      </div>
+      <p class="absolute bottom-6 text-sm text-slate-500 font-mono">2-minute demo — WhatsApp booking simulation</p>
+    </div>
+    <div class="mt-8 grid md:grid-cols-3 gap-4">
+      <div class="p-4 rounded-xl bg-slate-900 border border-slate-800"><div class="text-2xl font-bold text-cyan-400">&lt; 3 sec</div><div class="text-xs text-slate-500">Average Response Time</div></div>
+      <div class="p-4 rounded-xl bg-slate-900 border border-slate-800"><div class="text-2xl font-bold text-cyan-400">24/7</div><div class="text-xs text-slate-500">Always Available</div></div>
+      <div class="p-4 rounded-xl bg-slate-900 border border-slate-800"><div class="text-2xl font-bold text-cyan-400">Zero</div><div class="text-xs text-slate-500">Missed Leads</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section id="testimonials" class="py-24 px-6 bg-slate-900/20">
+  <div class="max-w-7xl mx-auto">
+    <div class="text-center mb-16">
+      <h2 class="text-4xl lg:text-5xl font-bold mb-4">Loved by Business Owners</h2>
+      <p class="text-slate-400 text-lg">Real reviews from Indian businesses using AI Employee.</p>
+    </div>
+    <div class="grid md:grid-cols-3 gap-6">
+      <div class="p-8 rounded-2xl bg-slate-900 border border-slate-800"><div class="text-yellow-400 mb-4">★★★★★</div><p class="text-slate-300 mb-6">"I used to miss 40% of patient calls during busy hours. Now AI Employee books appointments even at 2 AM. Revenue up 30% in the first month."</p><div class="font-semibold">Dr. Rajesh Kumar</div><div class="text-xs text-slate-500">Kumar Dental Clinic, Jammu</div></div>
+      <div class="p-8 rounded-2xl bg-slate-900 border border-slate-800"><div class="text-yellow-400 mb-4">★★★★★</div><p class="text-slate-300 mb-6">"WhatsApp leads used to go cold. The AI responds in seconds in Hindi. We've sold 15 more cars this quarter thanks to faster follow-ups."</p><div class="font-semibold">Amit Sharma</div><div class="text-xs text-slate-500">Sharma Motors, Jammu</div></div>
+      <div class="p-8 rounded-2xl bg-slate-900 border border-slate-800"><div class="text-yellow-400 mb-4">★★★★★</div><p class="text-slate-300 mb-6">"Members message in Hinglish and the AI understands perfectly. Class bookings are fully automated. I save 4 hours every day."</p><div class="font-semibold">Priyanka Khanna</div><div class="text-xs text-slate-500">FitZone Gym, Jammu</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- HINDI DEMO -->
+<section class="py-24 px-6">
+  <div class="max-w-4xl mx-auto">
+    <div class="text-center mb-12">
+      <h2 class="text-4xl lg:text-5xl font-bold mb-4">Speaks Your Customer's Language</h2>
+      <p class="text-slate-400 text-lg">Hindi, Hinglish, English, Punjabi, Dogri — the AI adapts naturally.</p>
+    </div>
+    <div class="bg-slate-900 rounded-2xl border border-slate-700 p-6 space-y-4">
+      <div class="flex justify-end"><div class="bg-cyan-600 rounded-2xl rounded-tr-sm px-4 py-3 max-w-[80%] text-sm">Namaste, kya aaj evening me 6 baje gym ki slot available hai?</div></div>
+      <div class="flex justify-start"><div class="bg-slate-800 rounded-2xl rounded-tl-sm px-4 py-3 max-w-[80%] text-sm border border-slate-700">Namaste! ✅ Ji haan, 6 PM ki slot available hai. Aapka naam aur phone number bataiye.</div></div>
+      <div class="flex justify-end"><div class="bg-cyan-600 rounded-2xl rounded-tr-sm px-4 py-3 max-w-[80%] text-sm">Rahul Sharma, 98765 43210</div></div>
+      <div class="flex justify-start"><div class="bg-slate-800 rounded-2xl rounded-tl-sm px-4 py-3 max-w-[80%] text-sm border border-slate-700">🎉 Booking confirmed! Today, 6:00 PM · FitZone Gym, Jammu. See you soon! 💪</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section id="pricing" class="py-24 px-6 bg-slate-900/20">
+  <div class="max-w-5xl mx-auto">
+    <div class="text-center mb-16">
+      <h2 class="text-4xl lg:text-5xl font-bold mb-4">Simple, Transparent Pricing</h2>
+      <p class="text-slate-400 text-lg">Start small, scale as you grow. No hidden fees.</p>
+    </div>
+    <div class="grid md:grid-cols-3 gap-6 items-center">
+      <div class="p-8 rounded-2xl bg-slate-900 border border-slate-800">
+        <h3 class="text-lg text-slate-400 mb-2">Starter</h3>
+        <div class="text-4xl font-bold mb-6">₹5,000<span class="text-lg text-slate-500 font-normal">/mo</span></div>
+        <ul class="space-y-3 mb-8 text-sm text-slate-400">
+          <li>✓ 1 Channel (WhatsApp or Email)</li>
+          <li>✓ Up to 500 conversations/mo</li>
+          <li>✓ Basic appointment booking</li>
+        </ul>
+        <button type="button" data-plan="Starter" class="w-full py-3 rounded-xl border border-slate-700 hover:border-cyan-500 font-semibold">Get Started</button>
+      </div>
+      <div class="p-8 rounded-2xl bg-gradient-to-b from-cyan-900/20 to-slate-900 border-2 border-cyan-500/50 relative scale-105 shadow-xl shadow-cyan-500/10">
+        <div class="absolute -top-4 left-1/2 -translate-x-1/2 px-4 py-1 bg-gradient-to-r from-cyan-500 to-blue-600 rounded-full text-xs font-bold">MOST POPULAR</div>
+        <h3 class="text-lg text-cyan-400 mb-2">Growth</h3>
+        <div class="text-4xl font-bold mb-6">₹15,000<span class="text-lg text-slate-500 font-normal">/mo</span></div>
+        <ul class="space-y-3 mb-8 text-sm text-slate-300">
+          <li>✓ All 5 Channels</li>
+          <li>✓ Up to 2,000 conversations/mo</li>
+          <li>✓ Advanced booking + CRM</li>
+          <li>✓ Lead follow-up automation</li>
+        </ul>
+        <button type="button" data-plan="Growth" class="w-full py-3 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 font-bold">Get Started</button>
+      </div>
+      <div class="p-8 rounded-2xl bg-slate-900 border border-slate-800">
+        <h3 class="text-lg text-slate-400 mb-2">Enterprise</h3>
+        <div class="text-4xl font-bold mb-6">₹50,000<span class="text-lg text-slate-500 font-normal">/mo</span></div>
+        <ul class="space-y-3 mb-8 text-sm text-slate-400">
+          <li>✓ Unlimited conversations</li>
+          <li>✓ Multi-location support</li>
+          <li>✓ Custom AI training</li>
+          <li>✓ Dedicated account manager</li>
+        </ul>
+        <button type="button" data-plan="Enterprise" class="w-full py-3 rounded-xl border border-slate-700 hover:border-cyan-500 font-semibold">Contact Sales</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STATS -->
+<section class="py-20 px-6 border-y border-slate-800 bg-gradient-to-r from-cyan-900/20 to-blue-900/20">
+  <div class="max-w-7xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+    <div><div class="text-4xl font-bold gradient-text mb-2">500+</div><div class="text-sm text-slate-400">Businesses Served</div></div>
+    <div><div class="text-4xl font-bold gradient-text mb-2">2M+</div><div class="text-sm text-slate-400">Conversations Handled</div></div>
+    <div><div class="text-4xl font-bold gradient-text mb-2">98%</div><div class="text-sm text-slate-400">Customer Satisfaction</div></div>
+    <div><div class="text-4xl font-bold gradient-text mb-2">24/7</div><div class="text-sm text-slate-400">Always On</div></div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact" class="py-24 px-6">
+  <div class="max-w-4xl mx-auto">
+    <div class="text-center mb-12">
+      <h2 class="text-4xl lg:text-5xl font-bold mb-4">Ready to Hire Your AI Employee?</h2>
+      <p class="text-slate-400 text-lg">Book a free demo. No credit card required. 14-day free trial.</p>
+    </div>
+    <div class="grid md:grid-cols-2 gap-8">
+      <div class="space-y-4">
+        <div class="p-6 rounded-2xl bg-slate-900 border border-slate-800">
+          <h4 class="font-bold text-lg mb-1">Chaitanya Sharma</h4>
+          <p class="text-slate-400">Founder &amp; CEO · A unit of Hindustan Group</p>
         </div>
-        <div class="paid-consult-action">
-          <div class="paid-price"><span id="consult-price">$199</span> <span class="mono">USD</span></div>
-          <button type="button" class="btn" id="consult-checkout-btn">Book &amp; Pay Now</button>
-          <p class="paid-note mono">Secure checkout via Stripe</p>
+        <div class="p-6 rounded-2xl bg-slate-900 border border-slate-800">
+          <h4 class="font-bold text-lg mb-1">A Block, Bahu Plaza</h4>
+          <p class="text-slate-400">Jammu, Jammu &amp; Kashmir, India</p>
+        </div>
+        <div class="p-6 rounded-2xl bg-slate-900 border border-slate-800">
+          <h4 class="font-bold text-lg mb-1"><a href="tel:+916005393770" class="hover:text-cyan-400">+91 60053 93770</a></h4>
+          <p class="text-slate-400">Call or WhatsApp anytime</p>
+        </div>
+        <div class="p-6 rounded-2xl bg-slate-900 border border-slate-800">
+          <h4 class="font-bold text-lg mb-1"><a href="mailto:hindustangroupjammu@gmail.com" class="hover:text-cyan-400">hindustangroupjammu@gmail.com</a></h4>
+          <p class="text-slate-400">Email us for partnerships</p>
         </div>
       </div>
-
-      <form id="contact-form" class="contact-form" novalidate>
-        <div class="form-row">
-          <div class="field">
-            <label for="name">Name</label>
-            <input type="text" id="name" name="name" autocomplete="name" required>
-            <span class="field-error" id="err-name"></span>
-          </div>
-          <div class="field">
-            <label for="email">Work email</label>
-            <input type="email" id="email" name="email" autocomplete="email" required>
-            <span class="field-error" id="err-email"></span>
-          </div>
+      <form id="demo-form" class="p-8 rounded-2xl bg-slate-900 border border-slate-800 space-y-4">
+        <input type="hidden" id="plan" name="plan" value="">
+        <div>
+          <label class="block text-sm font-medium text-slate-400 mb-2" for="company">Business Name</label>
+          <input type="text" id="company" name="company" required class="w-full px-4 py-3 rounded-xl bg-slate-800 border border-slate-700 focus:border-cyan-500 focus:outline-none text-white placeholder-slate-500" placeholder="Your business name">
         </div>
-        <div class="form-row">
-          <div class="field">
-            <label for="company">Company</label>
-            <input type="text" id="company" name="company" autocomplete="organization">
-          </div>
-          <div class="field">
-            <label for="phone">Phone</label>
-            <input type="tel" id="phone" name="phone" autocomplete="tel" placeholder="6005393770">
-            <span class="field-error" id="err-phone"></span>
-          </div>
-        </div>
-        <div class="field">
-          <label for="service">Interested in</label>
-          <select id="service" name="service">
-            <option value="">Loading services…</option>
+        <div>
+          <label class="block text-sm font-medium text-slate-400 mb-2" for="service">Industry</label>
+          <select id="service" name="service" required class="w-full px-4 py-3 rounded-xl bg-slate-800 border border-slate-700 focus:border-cyan-500 focus:outline-none text-white">
+            <option value="">Loading industries…</option>
           </select>
-          <span class="field-error" id="err-service"></span>
         </div>
-        <div class="field">
-          <label for="message">What are you trying to solve?</label>
-          <textarea id="message" name="message" rows="4" required></textarea>
-          <span class="field-error" id="err-message"></span>
+        <div>
+          <label class="block text-sm font-medium text-slate-400 mb-2" for="email">Email <span class="text-slate-600">(optional)</span></label>
+          <input type="email" id="email" name="email" class="w-full px-4 py-3 rounded-xl bg-slate-800 border border-slate-700 focus:border-cyan-500 focus:outline-none text-white placeholder-slate-500" placeholder="you@business.com">
         </div>
-        <button type="submit" class="btn" id="submit-btn">
-          <span id="submit-label">Send message</span>
-        </button>
-        <div class="form-status" id="form-status" role="status" aria-live="polite"></div>
+        <div>
+          <label class="block text-sm font-medium text-slate-400 mb-2" for="phone">Phone Number</label>
+          <input type="tel" id="phone" name="phone" required class="w-full px-4 py-3 rounded-xl bg-slate-800 border border-slate-700 focus:border-cyan-500 focus:outline-none text-white placeholder-slate-500" placeholder="+91 98765 43210">
+        </div>
+        <button type="submit" id="submit-btn" class="w-full py-4 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 hover:shadow-lg hover:shadow-cyan-500/25 transition-all font-bold text-lg"><span id="submit-label">Book Free Demo</span></button>
+        <p id="form-status" class="text-sm text-center min-h-[20px]"></p>
+        <p class="text-xs text-center text-slate-500">No credit card required. 14-day free trial included.</p>
       </form>
     </div>
   </div>
 </section>
 
-<footer>
-  <div class="wrap">
-    <div class="footer-grid">
-      <div class="footer-brand">
-        <div class="logo">
-          <span class="logo-mark">
-            <svg viewBox="0 0 26 26" fill="none">
-              <circle cx="13" cy="13" r="3" fill="#4ce0d2"/>
-              <ellipse cx="13" cy="13" rx="12" ry="5" stroke="#4ce0d2" stroke-width="1.4"/>
-              <ellipse cx="13" cy="13" rx="12" ry="5" stroke="#ffb86b" stroke-width="1.4" transform="rotate(60 13 13)"/>
-              <ellipse cx="13" cy="13" rx="12" ry="5" stroke="#8a8fa3" stroke-width="1" transform="rotate(120 13 13)"/>
-            </svg>
-          </span>
-          HINDUSTAN
-        </div>
-        <p>A unit of Hindustan Group — IT services and systems engineering for cloud, security, and software infrastructure. Based in Jammu, serving businesses across India.</p>
+<!-- FOOTER -->
+<footer class="py-12 px-6 border-t border-slate-800 bg-slate-950">
+  <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-6">
+    <div class="flex items-center gap-3">
+      <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-cyan-400 to-blue-600 flex items-center justify-center">
+        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
       </div>
-      <div>
-        <h4>Services</h4>
-        <a href="#services">Cloud &amp; Migration</a>
-        <a href="#services">Cybersecurity</a>
-        <a href="#services">Software Development</a>
-        <a href="#services">AI &amp; Data</a>
-      </div>
-      <div>
-        <h4>Company</h4>
-        <a href="#process">Our Process</a>
-        <a href="#stats">Why Us</a>
-        <a href="#contact">Contact</a>
-      </div>
-      <div>
-        <h4>Contact</h4>
-        <a href="mailto:hindustangroupjammu@gmail.com">hindustangroupjammu@gmail.com</a>
-        <a href="tel:+916005393770">+91 60053 93770</a>
-        <span style="display:block;font-size:14px;color:var(--ink);opacity:0.85;margin-top:11px;line-height:1.5;">A Block, Bahu Plaza<br>Jammu</span>
-      </div>
+      <span class="text-xl font-bold">AI<span class="text-cyan-400">Employee</span></span>
     </div>
-    <div class="footer-bottom">
-      <span>© 2026 Hindustan Group. All rights reserved.</span>
-      <span class="mono">BUILT FOR CONTINUITY</span>
-    </div>
+    <div class="text-sm text-slate-500 text-center">© 2026 AI Employee — A unit of Hindustan Group. Built in Jammu, India.</div>
+    <a href="tel:+916005393770" class="text-sm text-cyan-400 hover:underline">+91 60053 93770</a>
   </div>
 </footer>
 
-<div class="toast" id="toast"></div>
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-<script src="/js/main.js"></script>
+<script src="/js/ai-employee.js"></script>
 </body>
 </html>

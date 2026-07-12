@@ -1,44 +1,38 @@
 [
   {
-    "id": "hardware",
+    "id": "clinic",
     "code": "01",
-    "title": "Computer & Laptop Sales & Service",
-    "desc": "New and refurbished systems, repairs, upgrades, and on-site troubleshooting for offices and home users across Jammu."
+    "title": "Clinic / Healthcare",
+    "desc": "Appointment booking, patient reminders, prescription refills"
   },
   {
-    "id": "networking",
+    "id": "car-dealer",
     "code": "02",
-    "title": "Networking, Wi-Fi & LAN Setup",
-    "desc": "Structured cabling, router configuration, office Wi-Fi, and secure LAN design for reliable connectivity."
+    "title": "Car Dealership",
+    "desc": "Test drive booking, inventory queries, financing info"
   },
   {
-    "id": "cctv",
+    "id": "gym",
     "code": "03",
-    "title": "CCTV & Security Systems",
-    "desc": "IP and analog camera installation, DVR/NVR setup, remote viewing, and maintenance for shops, offices, and homes."
+    "title": "Gym / Fitness",
+    "desc": "Membership inquiries, class bookings, trainer schedules"
   },
   {
-    "id": "software",
+    "id": "restaurant",
     "code": "04",
-    "title": "Software & Website Development",
-    "desc": "Business websites, billing software, inventory systems, and custom apps built around how your team actually works."
+    "title": "Restaurant / Cafe",
+    "desc": "Table reservations, menu questions, order tracking"
   },
   {
-    "id": "cloud",
+    "id": "real-estate",
     "code": "05",
-    "title": "Cloud, Server & Data Backup",
-    "desc": "Server setup, cloud migration, automated backups, and disaster recovery so your data survives hardware failure."
+    "title": "Real Estate Agency",
+    "desc": "Property inquiries, site visit booking, follow-ups"
   },
   {
-    "id": "amc",
+    "id": "other",
     "code": "06",
-    "title": "Annual Maintenance (AMC)",
-    "desc": "Scheduled visits, priority support, and preventive care for your computers, network, and printers — one fixed yearly plan."
-  },
-  {
-    "id": "consulting",
-    "code": "07",
-    "title": "IT Consulting & Support",
-    "desc": "Honest advice on what to buy, what to fix, and what to replace — plus remote and on-site support when things break."
+    "title": "Other",
+    "desc": "Custom AI workflows for your business type"
   }
 ]

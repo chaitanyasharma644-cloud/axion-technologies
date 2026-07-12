@@ -101,28 +101,51 @@ function normalizePhone(raw) {
 }
 
 function validateContact(body) {
+  const isDemo = body.source === 'ai-employee-demo';
   const errors = {};
-  const name = (body.name || '').toString().trim();
-  const email = (body.email || '').toString().trim();
+  let name = (body.name || '').toString().trim();
+  let email = (body.email || '').toString().trim();
   const phone = normalizePhone(body.phone);
-  const company = (body.company || '').toString().trim();
+  let company = (body.company || '').toString().trim();
   const service = (body.service || '').toString().trim();
-  const message = (body.message || '').toString().trim();
+  const plan = (body.plan || '').toString().trim();
+  let message = (body.message || '').toString().trim();
   const services = readServices();
   const validServiceIds = new Set(services.map(s => s.id));
 
-  if (!name || name.length < 2) errors.name = 'Please enter your name.';
-  if (!email || !EMAIL_RE.test(email)) errors.email = 'Please enter a valid email.';
-  if (phone && !PHONE_RE.test(phone.replace(/\s/g, ''))) errors.phone = 'Please enter a valid 10-digit mobile number.';
-  if (service && !validServiceIds.has(service)) errors.service = 'Please choose a valid service.';
-  if (!message || message.length < 10) errors.message = 'Message should be at least 10 characters.';
-  if (name.length > 120) errors.name = 'Name is too long.';
-  if (message.length > 4000) errors.message = 'Message is too long.';
+  if (isDemo) {
+    company = company || name;
+    name = name || company;
+    if (!company || company.length < 2) errors.company = 'Please enter your business name.';
+    if (!phone || !PHONE_RE.test(phone.replace(/\s/g, ''))) errors.phone = 'Please enter a valid 10-digit mobile number.';
+    if (email && !EMAIL_RE.test(email)) errors.email = 'Please enter a valid email.';
+    if (service && !validServiceIds.has(service)) errors.service = 'Please choose a valid industry.';
+    if (!message) {
+      message = `Free AI Employee demo request${plan ? ` (${plan} plan)` : ''}. Industry: ${serviceLabel(service)}. Callback requested within 24 hours.`;
+    }
+  } else {
+    if (!name || name.length < 2) errors.name = 'Please enter your name.';
+    if (!email || !EMAIL_RE.test(email)) errors.email = 'Please enter a valid email.';
+    if (phone && !PHONE_RE.test(phone.replace(/\s/g, ''))) errors.phone = 'Please enter a valid 10-digit mobile number.';
+    if (service && !validServiceIds.has(service)) errors.service = 'Please choose a valid service.';
+    if (!message || message.length < 10) errors.message = 'Message should be at least 10 characters.';
+    if (name.length > 120) errors.name = 'Name is too long.';
+    if (message.length > 4000) errors.message = 'Message is too long.';
+  }
 
   return {
     valid: Object.keys(errors).length === 0,
     errors,
-    clean: { name, email, phone, company, service, message }
+    clean: {
+      name: name || company,
+      email,
+      phone,
+      company: company || name,
+      service,
+      message,
+      plan,
+      source: isDemo ? 'ai-employee-demo' : 'contact'
+    }
   };
 }
 
@@ -148,13 +171,16 @@ async function notifyNewInquiry(inquiry) {
   if (!NOTIFY_EMAIL) return;
 
   const label = serviceLabel(inquiry.service);
+  const brand = inquiry.source === 'ai-employee-demo' ? 'AI Employee' : 'Hindustan Group';
+  const planLine = inquiry.plan ? `<p><strong>Plan:</strong> ${escapeHtml(inquiry.plan)}</p>` : '';
   const staffBody = `
-    <h2>New inquiry — Hindustan Group</h2>
+    <h2>New inquiry — ${brand}</h2>
     <p><strong>Name:</strong> ${escapeHtml(inquiry.name)}</p>
-    <p><strong>Email:</strong> <a href="mailto:${escapeHtml(inquiry.email)}">${escapeHtml(inquiry.email)}</a></p>
+    <p><strong>Email:</strong> ${inquiry.email ? `<a href="mailto:${escapeHtml(inquiry.email)}">${escapeHtml(inquiry.email)}</a>` : '—'}</p>
     <p><strong>Phone:</strong> ${escapeHtml(inquiry.phone || '—')}</p>
     <p><strong>Company:</strong> ${escapeHtml(inquiry.company || '—')}</p>
-    <p><strong>Service:</strong> ${escapeHtml(label)}</p>
+    <p><strong>Industry:</strong> ${escapeHtml(label)}</p>
+    ${planLine}
     <p><strong>Message:</strong></p>
     <p>${escapeHtml(inquiry.message).replace(/\n/g, '<br>')}</p>
     <hr>
@@ -163,25 +189,29 @@ async function notifyNewInquiry(inquiry) {
 
   await sendEmail({
     to: [NOTIFY_EMAIL],
-    subject: `New lead: ${inquiry.name} — ${label}`,
+    subject: inquiry.source === 'ai-employee-demo'
+      ? `AI Employee demo: ${inquiry.company || inquiry.name} — ${label}`
+      : `New lead: ${inquiry.name} — ${label}`,
     html: staffBody
   });
 
+  if (!inquiry.email) return;
+
   const customerBody = `
-    <h2>We received your message</h2>
+    <h2>We received your request</h2>
     <p>Hi ${escapeHtml(inquiry.name)},</p>
-    <p>Thank you for contacting Hindustan Group. We have received your inquiry about <strong>${escapeHtml(label)}</strong> and will reply within one business day.</p>
+    <p>Thank you for contacting ${brand}. We received your inquiry about <strong>${escapeHtml(label)}</strong> and will reply within one business day.</p>
     <p><strong>Your message:</strong><br>${escapeHtml(inquiry.message).replace(/\n/g, '<br>')}</p>
     <hr>
     <p style="color:#666;font-size:12px;">
-      Hindustan Group · A Block, Bahu Plaza, Jammu<br>
+      A unit of Hindustan Group · A Block, Bahu Plaza, Jammu<br>
       +91 60053 93770 · hindustangroupjammu@gmail.com
     </p>
   `;
 
   await sendEmail({
     to: [inquiry.email],
-    subject: 'We received your inquiry — Hindustan Group',
+    subject: `We received your request — ${brand}`,
     html: customerBody
   });
 }
@@ -225,7 +255,10 @@ app.post('/api/contact', rateLimit, async (req, res) => {
     list.unshift(inquiry);
     await writeInquiries(list);
     notifyNewInquiry(inquiry).catch(err => console.error('Notification error:', err));
-    res.json({ ok: true, message: "Thanks — we've got it. We'll reply within one business day." });
+    const reply = inquiry.source === 'ai-employee-demo'
+      ? "Thanks! We'll call you within 24 hours to schedule your free demo."
+      : "Thanks — we've got it. We'll reply within one business day.";
+    res.json({ ok: true, message: reply });
   } catch (err) {
     console.error('Failed to save inquiry:', err);
     res.status(500).json({ ok: false, error: 'Something went wrong on our end. Please try again shortly.' });
@@ -310,7 +343,7 @@ app.post('/api/checkout/consultation', async (req, res) => {
 
 // ---------- start ----------
 app.listen(PORT, () => {
-  console.log(`Hindustan Group server running on http://localhost:${PORT}`);
+  console.log(`AI Employee server running on http://localhost:${PORT}`);
   if (ADMIN_KEY === 'changeme') {
     console.warn('WARNING: ADMIN_KEY is using the default value. Set a real one in your .env before deploying.');
   }
